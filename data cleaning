@@ -21,13 +21,15 @@ X_train, X_valid, y_train, y_valid = train_test_split(X, y, train_size=0.8, test
                                                       random_state=0)
 
 # Function for comparing different models
-def score_model(model, X_t=X_train, X_v=X_valid, y_t=y_train, y_v=y_valid):
-    model.fit(X_t, y_t)
-    preds = model.predict(X_v)
-    return mean_absolute_error(y_v, preds)
-
+# function for comparing different approaches
+def score_dataset(X_train, X_valid, y_train, y_valid):
+    model = RandomForestRegressor(n_estimators=100, random_state=0)
+    model.fit(X_train, y_train)
+    preds = model.predict(X_valid)
+    return mean_absolute_error(y_valid, preds)
+    
 for i in range(0, len(models)):
-    mae = score_model(models[i])
+    mae = score_data(models[i])
     print("Model %d MAE: %d" % (i+1, mae))
 
 # Get names of columns with missing values
